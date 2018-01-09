@@ -77,7 +77,7 @@ define(function() {
 		}
 
 		function is_done () {
-			return self.health.hp <= 0 || target.health.hp <= 0;
+			return self.health.hp <= 0 || target.health.hp <= 0 || cc > 5000;
 		}
 
 		function choose_action(observation) {
