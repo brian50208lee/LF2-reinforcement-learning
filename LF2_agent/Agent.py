@@ -23,29 +23,41 @@ class LF2_Agent:
         # learning parameters
         self.learn_start = 100
         self.learn_freq = 1
-        self.replace_target_freq = 1001
-        self.summary_freq = 100
-        self.max_step = 5e6
+        self.replace_target_freq = 1000
+        self.summary_freq = 1000
+        self.save_episode_freq = 10
         self.explore_rate = 1.0
-        self.min_explore_rate = 0.05
-        self.decrease_explore_rate = (self.explore_rate - self.min_explore_rate) / (self.max_step * 0.2)
+        self.explore_rate_min = 0.05
+        self.explore_step = 10000
+        self.explore_rate_delta = -(self.explore_rate - self.explore_rate_min) / self.explore_step
 
         # load model
-        """
+        '''
         self.model = DeepQNetwork(
                         inputs_shape=self.inputs_shape,
                         n_actions=self.n_actions,
                         gamma=0.99,
                         batch_size=32,
-                        memory_size=10000,
+                        memory_size=1000,
                         summary_path='LF2_agent/log/'
                     )
-        """
+        '''
+
+        # variable
+        self.step = 0
+        self.episode = 0
+        self.episode_reward_hist = [0]
+
+        print('initial agent done')
 
     def choose_action(self, observation):
         observation = prepro(observation)
         action = int(random.random()*self.n_actions)
-        #action = self.model.choose_action(observation)
+        '''
+        action = self.model.choose_action(observation)
+        if np.random.uniform() < self.explore_rate:
+            action = np.random.randint(0, self.n_actions)
+        '''
         return action
 
     def store_transition(self, pre_observation, action, reward, observation, done):
