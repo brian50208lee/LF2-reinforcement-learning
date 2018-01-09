@@ -1,0 +1,7 @@
+# file
+*.DS_Store
+*.pyc
+
+# folder
+F.LF/
+LF2_19/

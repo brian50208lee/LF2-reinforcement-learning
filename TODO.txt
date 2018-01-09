@@ -1,0 +1,7 @@
+1. javascript to python (Done, agent_lf2.py)
+2. AI v.s. AI (Done, manager.js: start_demo)
+3. Game over auto restart (Done, Crusher.js)
+4. AI script
+5. DQN
+6. Auto destroy items (Done, Crusher.js)
+7. FPS
