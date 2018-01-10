@@ -1,7 +1,7 @@
 import numpy as np
 
 class Agent(object):
-    def __init__(self):
+    def __init__(self, args):
         # model parameters
         self.n_actions = 8
 
@@ -41,7 +41,7 @@ class LF2_Agent(Agent):
         observation = np.array(observation, dtype='float32')
         return observation
         
-    def __init__(self):
+    def __init__(self, args):
         # model parameters
         self.n_actions = 8
         self.inputs_shape = (44,)
@@ -66,6 +66,11 @@ class LF2_Agent(Agent):
                         memory_size=5000,
                         summary_path='./LF2_agent/brian/logs/'
                     )
+        
+        if args.load:
+            self.model.load(args.load)
+        if not args.train:
+            self.explore_rate = 0.0
 
         # variable
         self.step = 0
