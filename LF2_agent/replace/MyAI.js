@@ -32,6 +32,8 @@ define(function() {
 			// destroy items every 10
 			if (cc % 10 === 0) {
 				match.destroy_weapons()
+				self.health.mp = 0
+				target.health.mp = 0
 			}
 			// game over restart
 			if (done) {
@@ -77,7 +79,7 @@ define(function() {
 		}
 
 		function is_done () {
-			return self.health.hp <= 0 || target.health.hp <= 0 || cc > 5000;
+			return self.health.hp <= 0 || target.health.hp <= 0 || cc > 3000;
 		}
 
 		function choose_action(observation) {

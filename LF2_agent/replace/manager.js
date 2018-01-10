@@ -1704,17 +1704,17 @@ function Manager(package, buildinfo)
 			players:[
 				{
 					use:true,
-					name:'CRUSHER',
+					name:'MyAI',
 					type:'computer',
 					selected:0,
-					selected_AI:0,
+					selected_AI:3,
 					team:1
 				},
 				{
 					use:true,
 					name:'dumbass',
 					type:'computer',
-					selected:0,
+					selected: Math.floor((Math.random() * 8) + 1), // [1,8]
 					selected_AI:2,
 					team:2
 				}

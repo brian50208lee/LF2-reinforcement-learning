@@ -2,7 +2,7 @@ import logging
 from flask import Flask, request
 from flask_cors import CORS
 
-from Agent import LF2_Agent
+from Agent import *
 
 # param
 verbose = False
@@ -16,7 +16,8 @@ log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 # agent
-agent = LF2_Agent()
+agent = Agent()
+#agent = LF2_Agent()
 
 @app.route("/agent_lf2/choose_action")
 def choose_action():
