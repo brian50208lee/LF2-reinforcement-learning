@@ -134,7 +134,7 @@ function Manager(package, buildinfo)
 			[
 				{
 					type:'keyboard',
-					config: { up:'w',down:'x',left:'a',right:'d',def:'z',jump:'q',att:'s' }
+					config: { up:'up',down:'down',left:'left',right:'right',def:'z',jump:'a',att:'q' }
 				},
 				{
 					type:'keyboard',
