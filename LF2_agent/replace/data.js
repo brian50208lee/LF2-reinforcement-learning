@@ -17,6 +17,7 @@ define({
 
 	object:
 	[
+		{id:31, name:'Bandit_Blue', type:'character', file:'data/bandit_blue.js', pic:'sprite/bandit_fb.png'},
 		{id:30, name:'Bandit', type:'character', file:'data/bandit.js', pic:'sprite/bandit_f.png'},
 		{id: 1, name:'Deep', type:'character', file:'data/deep.js', pic:'sprite/deep_f.png'},
 		{id: 2, name:'John', type:'character', file:'data/john.js', pic:'sprite/john_f.png'},
