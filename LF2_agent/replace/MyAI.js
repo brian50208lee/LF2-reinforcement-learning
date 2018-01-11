@@ -51,6 +51,7 @@ define(function() {
 			// position delta
 			var dx = target.ps.x-self.ps.x;
 			var dz = target.ps.z-self.ps.z;
+			var dy = target.ps.y-self.ps.y;
 			// enemy
 			var t_hp = target.health.hp
 			var t_mp = target.health.mp
@@ -64,7 +65,7 @@ define(function() {
 			var m_st = self.state()
 			var m_fm = self.frame.N
 			// observation vector
-			observation = [dx, dz]
+			observation = [dx, dz, dy]
 			observation = observation.concat([t_hp, t_mp, t_fc, t_st, t_fm])
 			observation = observation.concat([m_hp, m_mp, m_fc, m_st, m_fm])
 			observation = observation.join() // join by ','
@@ -72,13 +73,13 @@ define(function() {
 		}
 
 		function get_reward() {
-			reward = -1;
+			reward = -0.01;
 			delta_target_hp = target.health.hp - pre_t_hp;
 			delta_my_hp = self.health.hp - pre_m_hp;
 			if (delta_target_hp < 0) {
-				reward = -delta_target_hp;
+				reward = 1.0;
 			} else if (delta_my_hp < 0) {
-				reward = delta_my_hp;
+				reward = -1.0;
 			}
 			pre_t_hp = target.health.hp;
 			pre_m_hp = self.health.hp;
