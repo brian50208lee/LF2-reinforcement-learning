@@ -37,7 +37,7 @@ def choose_action():
 def store_transition():
     pre_observation = request.args.get('pre_observation').split(',')
     action = int(request.args.get('action'))
-    reward = int(request.args.get('reward'))
+    reward = float(request.args.get('reward'))
     observation = request.args.get('observation').split(',')
     done = request.args.get('done') == 'true'
     if args.verbose:

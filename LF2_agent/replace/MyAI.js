@@ -3,6 +3,7 @@ define(function() {
 		// states
 		var cc = 0; //counter
 		var action_map = ['do_nothing', 'left', 'right', 'up', 'down', 'def', 'jump', 'att']; //number to direction mapping
+		var hold_action_map = ['left', 'right', 'up', 'down']
 		var target; //target opponent to chase after
 		// dqn
 		var pre_observation = null;
@@ -23,7 +24,11 @@ define(function() {
 			action = next_action
 			next_action = choose_action(observation)
 			if (next_action != 0) {
-				controller.keypress(action_map[next_action]);
+				if (next_action < action_map.length) {
+					controller.keypress(action_map[next_action]);
+				} else {
+					controller.keypress(hold_action_map[next_action - action_map.length], 1, 1);
+				}
 			}
 			reward = get_reward();
 			done = is_done();
@@ -67,11 +72,13 @@ define(function() {
 		}
 
 		function get_reward() {
-			reward = 0;
-			if (target.health.hp - pre_t_hp < 0) {
-				reward = 1;
-			} else if (self.health.hp - pre_m_hp < 0) {
-				reward = -1;
+			reward = -1;
+			delta_target_hp = target.health.hp - pre_t_hp;
+			delta_my_hp = self.health.hp - pre_m_hp;
+			if (delta_target_hp < 0) {
+				reward = -delta_target_hp;
+			} else if (delta_my_hp < 0) {
+				reward = delta_my_hp;
 			}
 			pre_t_hp = target.health.hp;
 			pre_m_hp = self.health.hp;

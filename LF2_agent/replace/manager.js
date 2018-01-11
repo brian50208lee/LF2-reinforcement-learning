@@ -1712,10 +1712,10 @@ function Manager(package, buildinfo)
 				},
 				{
 					use:true,
-					name:'dumbass',
+					name:'CRUSHER 1.0',
 					type:'computer',
-					selected: Math.floor((Math.random() * 8) + 1), // [1,8]
-					selected_AI:2,
+					selected: Math.floor((Math.random() * 9) + 1), // [1,8]
+					selected_AI:0,
 					team:2
 				}
 			],
