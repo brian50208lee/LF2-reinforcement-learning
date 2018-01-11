@@ -1714,8 +1714,8 @@ function Manager(package, buildinfo)
 					use:true,
 					name:'CRUSHER 1.0',
 					type:'computer',
-					selected: Math.floor((Math.random() * 9) + 1), // [1,8]
 					selected_AI:0,
+					selected: Math.floor((Math.random() * 9) + 1), // [1,9]
 					team:2
 				}
 			],
