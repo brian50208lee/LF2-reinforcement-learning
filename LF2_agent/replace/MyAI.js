@@ -8,10 +8,10 @@ define(function() {
 		// dqn
 		var pre_observation = null;
 		var observation = null;
-		var action = null;
-		var next_action = null;
-		var pre_t_hp = null;
-		var pre_m_hp = null;
+		var action = 0;
+		var next_action = 0;
+		var pre_t_hp = 500;
+		var pre_m_hp = 500;
 		// AI script
 		this.TU = function() {
 			// load target
@@ -64,10 +64,14 @@ define(function() {
 			var m_fc = self.AI.facing()
 			var m_st = self.state()
 			var m_fm = self.frame.N
+			// other
+			var t_id = target.id
+			var p_action = action
 			// observation vector
 			observation = [dx, dz, dy]
 			observation = observation.concat([t_hp, t_mp, t_fc, t_st, t_fm])
 			observation = observation.concat([m_hp, m_mp, m_fc, m_st, m_fm])
+			observation = observation.concat([t_id, p_action])
 			observation = observation.join() // join by ','
 			return observation
 		}

@@ -22,22 +22,32 @@ class LF2_Agent(Agent):
             if idx < length:
                 vector[idx] = 1.0
             return vector
-        observation[5] = 1.0 if observation[5] == 'true' else 0.0
-        observation[10] = 1.0 if observation[10] == 'true' else 0.0
+        observation[5] = 1.0 if observation[5] == 'true' else 0.0 # t_fc
+        observation[10] = 1.0 if observation[10] == 'true' else 0.0 # m_fc
+        # to float
         observation = np.array(observation, dtype='float32').tolist()
-        # dx dz
-        observation[0] /= 500.0
-        observation[1] /= 500.0
-        observation[2] /= 100.0
+        # position
+        observation[0] /= 500.0 # dx
+        observation[1] /= 500.0 # dy
+        observation[2] /= 100.0 # dz
         # target
-        observation[3] = 0.0
-        observation[4] = 0.0
-        observation[7] /= 500.0
+        observation[3] = 0.0 # t_hp
+        observation[4] = 0.0 # t_mp
+        observation[5] = observation[5] # t_fc
+        observation[6] = observation[6] # t_st -> one hot (20)
+        observation[7] /= 500.0 # t_fm
         # my
-        observation[8] = 0.0
-        observation[9] = 0.0
-        observation[12] /= 500.0
+        observation[8] = 0.0 # m_hp
+        observation[9] = 0.0 # m_mp
+        observation[10] = observation[10] # m_fc
+        observation[11] = observation[11] # m_st -> one hot (20)
+        observation[12] /= 500.0 # m_fm
+        # other
+        observation[13] = observation[13] # t_id -> one hot (32)
+        observation[14] = observation[14] # p_action -> one hot (12)
         # one hot
+        observation[14:15] = one_hot(int(observation[14]), 12)
+        observation[13:14] = one_hot(int(observation[13]), 32)
         observation[11:12] = one_hot(int(observation[11]), 20)
         observation[6:7] = one_hot(int(observation[6]), 20)
         observation = np.array(observation, dtype='float32')
@@ -46,7 +56,7 @@ class LF2_Agent(Agent):
     def __init__(self, args):
         # model parameters
         self.n_actions = 12
-        self.inputs_shape = (51,)
+        self.inputs_shape = (95,)
 
         # learning parameters
         self.learn_start = 100
@@ -63,9 +73,9 @@ class LF2_Agent(Agent):
         self.model = DeepQNetwork(
                         inputs_shape=self.inputs_shape,
                         n_actions=self.n_actions,
-                        gamma=0.99,
-                        batch_size=32,
-                        memory_size=5000,
+                        gamma=0.95,
+                        batch_size=64,
+                        memory_size=10000,
                         summary_path='./LF2_agent/brian/logs/'
                     )
         
