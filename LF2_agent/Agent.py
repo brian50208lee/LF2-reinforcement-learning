@@ -37,15 +37,15 @@ class LF2_Agent(Agent):
         observation[9] = 0.0
         observation[12] /= 500.0
         # one hot
-        observation[11:12] = one_hot(int(observation[11]), 19)
-        observation[6:7] = one_hot(int(observation[6]), 19)
+        observation[11:12] = one_hot(int(observation[11]), 20)
+        observation[6:7] = one_hot(int(observation[6]), 20)
         observation = np.array(observation, dtype='float32')
         return observation
         
     def __init__(self, args):
         # model parameters
         self.n_actions = 12
-        self.inputs_shape = (49,)
+        self.inputs_shape = (51,)
 
         # learning parameters
         self.learn_start = 100
