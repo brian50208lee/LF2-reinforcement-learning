@@ -19,7 +19,8 @@ class LF2_Agent(Agent):
     def prepro(self, observation):
         def one_hot(idx, length):
             vector = [0.0]*length
-            vector[idx] = 1.0
+            if idx < length:
+                vector[idx] = 1.0
             return vector
         observation[5] = 1.0 if observation[5] == 'true' else 0.0
         observation[10] = 1.0 if observation[10] == 'true' else 0.0
