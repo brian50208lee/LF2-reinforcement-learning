@@ -30,8 +30,8 @@ define(function() {
 					controller.keypress(hold_action_map[next_action - action_map.length], 1, 1);
 				}
 			}
-			reward = get_reward();
 			done = is_done();
+			reward = get_reward(done);
 			// store transition
 			store_transition(pre_observation, action, reward, observation, done);
 			// destroy items every 10
@@ -76,22 +76,22 @@ define(function() {
 			return observation
 		}
 
-		function get_reward() {
-			reward = -0.01;
+		function is_done () {
+			return self.health.hp <= 0 || target.health.hp <= 0 || cc > 3000;
+		}
+
+		function get_reward(done) {
+			reward = 0.0;
 			delta_target_hp = target.health.hp - pre_t_hp;
 			delta_my_hp = self.health.hp - pre_m_hp;
 			if (delta_target_hp < 0) {
 				reward = 1.0;
-			} else if (delta_my_hp < 0) {
+			} else if (done) {
 				reward = -1.0;
 			}
 			pre_t_hp = target.health.hp;
 			pre_m_hp = self.health.hp;
 			return reward;
-		}
-
-		function is_done () {
-			return self.health.hp <= 0 || target.health.hp <= 0 || cc > 3000;
 		}
 
 		function choose_action(observation) {
