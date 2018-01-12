@@ -15,14 +15,21 @@ define(function() {
 		// AI script
 		this.TU = function() {
 			// load target
-			if(cc++ % 100 === 0) {
+			if(cc % 100 === 0) {
 				load_target();
 			}
+			// destroy items every 10
+			if (cc % 10 === 0) {
+				match.destroy_weapons();
+				self.health.mp = 0;
+				target.health.mp = 0;
+			}
+			cc++;
 			// next state
-			pre_observation = observation
-			observation = get_observation()
-			action = next_action
-			next_action = choose_action(observation)
+			pre_observation = observation;
+			observation = get_observation();
+			action = next_action;
+			next_action = choose_action(observation);
 			if (next_action != 0) {
 				if (next_action < action_map.length) {
 					controller.keypress(action_map[next_action]);
@@ -31,47 +38,34 @@ define(function() {
 				}
 			}
 			done = is_done();
-			reward = get_reward(done);
+			reward = get_reward();
 			// store transition
 			store_transition(pre_observation, action, reward, observation, done);
-			// destroy items every 10
-			if (cc % 10 === 0) {
-				match.destroy_weapons()
-				self.health.mp = 0
-				target.health.mp = 0
-			}
 			// game over restart
 			if (done) {
+				pre_observation = null;
+				observation = null;
 				match.destroy();
 				match.manager.start_demo();
 			}
 		}
 
 		function get_observation() {
-			// position delta
-			var dx = target.ps.x-self.ps.x;
-			var dz = target.ps.z-self.ps.z;
-			var dy = target.ps.y-self.ps.y;
-			// enemy
-			var t_hp = target.health.hp
-			var t_mp = target.health.mp
-			var t_fc = target.AI.facing()
-			var t_st = target.state()
-			var t_fm = target.frame.N
-			// my
-			var m_hp = self.health.hp
-			var m_mp = self.health.mp
-			var m_fc = self.AI.facing()
-			var m_st = self.state()
-			var m_fm = self.frame.N
+			// position
+			var x = [target.ps.x, self.ps.x];
+			var z = [target.ps.z, self.ps.z];
+			var y = [target.ps.y, self.ps.y];
+			// state
+			var hp = [target.health.hp, self.health.hp];
+			var mp = [target.health.mp, self.health.mp];
+			var fc = [target.AI.facing() ? 1 : 0, self.AI.facing() ? 1 : 0];
+			var st = [target.state(), self.state()];
+			var fm = [target.frame.N, self.frame.N];
 			// other
-			var t_id = target.id
-			var p_action = action
+			var other = [target.id, action]
 			// observation vector
-			observation = [dx, dz, dy]
-			observation = observation.concat([t_hp, t_mp, t_fc, t_st, t_fm])
-			observation = observation.concat([m_hp, m_mp, m_fc, m_st, m_fm])
-			observation = observation.concat([t_id, p_action])
+			observation = []
+			observation = observation.concat(x, y, z, hp, mp, fc, st, fm, other)
 			observation = observation.join() // join by ','
 			return observation
 		}
@@ -80,13 +74,13 @@ define(function() {
 			return self.health.hp <= 0 || target.health.hp <= 0 || cc > 3000;
 		}
 
-		function get_reward(done) {
+		function get_reward() {
 			reward = 0.0;
 			delta_target_hp = target.health.hp - pre_t_hp;
 			delta_my_hp = self.health.hp - pre_m_hp;
 			if (delta_target_hp < 0) {
 				reward = 1.0;
-			} else if (done) {
+			} else if (delta_my_hp < 0) {
 				reward = -1.0;
 			}
 			pre_t_hp = target.health.hp;

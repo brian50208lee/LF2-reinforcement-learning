@@ -1704,18 +1704,18 @@ function Manager(package, buildinfo)
 			players:[
 				{
 					use:true,
-					name:'MyAI',
+					name:'DeepFighter',
 					type:'computer',
-					selected:0,
+					selected:1,
 					selected_AI:3,
 					team:1
 				},
 				{
 					use:true,
-					name:'CRUSHER 1.0',
+					name:'dumbass',
 					type:'computer',
-					selected_AI:0,
-					selected: Math.floor((Math.random() * 9) + 1), // [1,9]
+					selected: Math.floor((Math.random() * 8) + 2), // [2,9]
+					selected_AI:2,
 					team:2
 				}
 			],

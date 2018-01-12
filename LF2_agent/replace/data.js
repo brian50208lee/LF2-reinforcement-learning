@@ -58,7 +58,7 @@ define({
 		{id:1, file:'AI/Crusher.js', name:'CRUSHER 1.0'},
 		{id:2, file:'AI/Challangar.js', name:'CHALLANGAR 1.0'},
 		{id:3, file:'AI/dumbass.js', name:'dumbass'},
-		{id:4, file:'AI/MyAI.js', name:'MyAI'}
+		{id:4, file:'AI/DeepFighter.js', name:'DeepFighter'}
 	],
 
 	background:

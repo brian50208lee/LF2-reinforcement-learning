@@ -89,7 +89,6 @@ class BasicDeepQNetwork(object):
     def _build_summary(self):
         if self.summary_path:
             self.reward_hist = tf.placeholder(tf.float32, [None], name='reward_hist')
-            tf.summary.scalar('min_reward', tf.reduce_min(self.reward_hist))
             tf.summary.scalar('max_reward', tf.reduce_max(self.reward_hist))
             tf.summary.scalar('avg_reward', tf.reduce_mean(self.reward_hist))
             tf.summary.scalar('max_q', tf.reduce_max(self.q_target))
@@ -163,9 +162,12 @@ class DeepQNetwork(BasicDeepQNetwork):
         print(net.name, net.shape)
         # --------- layer1 ----------
         net = tf.layers.dense(net, 64, activation=tf.nn.relu, name='fc1')
-        print(net.name, net.shape)        
+        print(net.name, net.shape)
         # --------- layer2 ----------
-        net = tf.layers.dense(net, 32, activation=tf.nn.relu, name='fc2')
+        net = tf.layers.dense(net, 64, activation=tf.nn.relu, name='fc2')
+        print(net.name, net.shape)
+        # --------- layer3 ----------
+        net = tf.layers.dense(net, 32, activation=self.leaky_relu, name='fc3')
         print(net.name, net.shape)
         # --------- output ----------
         net = tf.layers.dense(net, self.n_actions, activation=None, name='output')
