@@ -1714,7 +1714,7 @@ function Manager(package, buildinfo)
 					use:true,
 					name:'dumbass',
 					type:'computer',
-					selected: Math.floor((Math.random() * 8) + 2), // [2,9]
+					selected: Math.floor((Math.random() * 9) + 1), // [1,9]
 					selected_AI:2,
 					team:2
 				}

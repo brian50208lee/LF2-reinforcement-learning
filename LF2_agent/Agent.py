@@ -70,7 +70,7 @@ class LF2_Agent(Agent):
         t_id = one_hot(t_id, 12)
         pre_action = one_hot(pre_action, self.n_actions)
         # merge
-        observation = [dbl, dbr] + [dx, dz, dy] + fc + st + fm + t_id + pre_action
+        observation = [dbl, dbr] + [dx, dz, dy] + fc + st + fm + pre_action
         observation = np.array(observation, dtype='float32')
         return observation
         
@@ -78,7 +78,7 @@ class LF2_Agent(Agent):
         self.tmp = 0
         # model parameters
         self.n_actions = 12
-        self.inputs_shape = (73,)
+        self.inputs_shape = (61,)
 
         # learning parameters
         self.learn_start = 100
