@@ -19,16 +19,16 @@ class Agent(object):
 class LF2_Agent(Agent):
     def cal_win_rate(self, obs):
         if not hasattr(self, 'win_rate'):
-            self.win_rate = {'All': []}
+            self.win_rate = {'AVG': []}
         t_hp, m_hp, t_id = float(obs[6]), float(obs[7]), obs[16]
         if self.win_rate.get(t_id) is None:
             self.win_rate[t_id] = []
         if t_hp < m_hp:
             self.win_rate[t_id].append(1.0)
-            self.win_rate['All'].append(1.0)
+            self.win_rate['AVG'].append(1.0)
         else:
             self.win_rate[t_id].append(0.0)
-            self.win_rate['All'].append(0.0)
+            self.win_rate['AVG'].append(0.0)
         if self.episode % 10 == 0:
             for t_id, hist in self.win_rate.items():
                 rate = np.array(hist[-20:], dtype='float32').mean()
@@ -54,10 +54,11 @@ class LF2_Agent(Agent):
         t_fm, m_fm = obs[14], obs[15]
         # other
         t_id, pre_action = obs[16], obs[17]
+        bg_bl, bg_br = 0.0, obs[18]
+        bg_bt, bg_bd = obs[19], obs[20]
         # select observation
-        x = m_x/500
-        z = m_z/100
-        y = m_y/100
+        dbl = abs(m_x - bg_bl)/500
+        dbr = abs(m_x - bg_br)/500
         dx = (t_x - m_x)/500
         dz = (t_z - m_z)/100
         dy = (t_y - m_y)/100
@@ -69,7 +70,7 @@ class LF2_Agent(Agent):
         t_id = one_hot(t_id, 12)
         pre_action = one_hot(pre_action, self.n_actions)
         # merge
-        observation = [x, z, y, dx, dz, dy] + fc + st + fm + t_id + pre_action
+        observation = [dbl, dbr] + [dx, dz, dy] + fc + st + fm + t_id + pre_action
         observation = np.array(observation, dtype='float32')
         return observation
         
@@ -77,7 +78,7 @@ class LF2_Agent(Agent):
         self.tmp = 0
         # model parameters
         self.n_actions = 12
-        self.inputs_shape = (74,)
+        self.inputs_shape = (73,)
 
         # learning parameters
         self.learn_start = 100

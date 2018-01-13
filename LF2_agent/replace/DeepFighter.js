@@ -62,7 +62,7 @@ define(function() {
 			var st = [target.state(), self.state()];
 			var fm = [target.frame.N, self.frame.N];
 			// other
-			var other = [target.id, action]
+			var other = [target.id, action, match.background.width, match.background.zboundary[0], match.background.zboundary[1]]
 			// observation vector
 			observation = []
 			observation = observation.concat(x, y, z, hp, mp, fc, st, fm, other)
@@ -76,12 +76,12 @@ define(function() {
 
 		function get_reward() {
 			reward = 0.0;
-			delta_target_hp = target.health.hp - pre_t_hp;
-			delta_my_hp = self.health.hp - pre_m_hp;
-			if (delta_target_hp < 0) {
+			if (target.health.hp - pre_t_hp < 0) {
 				reward = 1.0;
-			} else if (delta_my_hp < 0) {
+			} else if (self.health.hp - pre_m_hp < 0) {
 				reward = -1.0;
+			} else if (self.ps.x == 0 || self.ps.x == match.background.width) {
+				reward = -0.5;
 			}
 			pre_t_hp = target.health.hp;
 			pre_m_hp = self.health.hp;
