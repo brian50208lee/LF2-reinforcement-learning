@@ -19,14 +19,16 @@ class Agent(object):
 class LF2_Agent(Agent):
     def cal_win_rate(self, obs):
         if not hasattr(self, 'win_rate'):
-            self.win_rate = dict()
+            self.win_rate = {'All': 0.0}
         t_hp, m_hp, t_id = float(obs[6]), float(obs[7]), obs[16]
         if self.win_rate.get(t_id) is None:
             self.win_rate[t_id] = []
         if t_hp < m_hp:
             self.win_rate[t_id].append(1.0)
+            self.win_rate['All'].append(1.0)
         else:
             self.win_rate[t_id].append(0.0)
+            self.win_rate['All'].append(0.0)
         if self.episode % 10 == 0:
             for t_id, hist in self.win_rate.items():
                 rate = np.array(hist[-20:], dtype='float32').mean()
@@ -53,6 +55,9 @@ class LF2_Agent(Agent):
         # other
         t_id, pre_action = obs[16], obs[17]
         # select observation
+        x = m_x/500
+        z = m_z/100
+        y = m_y/100
         dx = (t_x - m_x)/500
         dz = (t_z - m_z)/100
         dy = (t_y - m_y)/100
@@ -61,10 +66,10 @@ class LF2_Agent(Agent):
         fc = [t_fc, m_fc]
         st = one_hot(t_st, 20) + one_hot(m_st, 20)
         fm = [t_fm/200, m_fm/200]
-        t_id = one_hot(t_id, 32)
+        t_id = one_hot(t_id, 12)
         pre_action = one_hot(pre_action, self.n_actions)
         # merge
-        observation = [dx, dz, dy] + fc + st + fm + pre_action
+        observation = [x, z, y, dx, dz, dy] + fc + st + fm + t_id + pre_action
         observation = np.array(observation, dtype='float32')
         return observation
         
@@ -72,7 +77,7 @@ class LF2_Agent(Agent):
         self.tmp = 0
         # model parameters
         self.n_actions = 12
-        self.inputs_shape = (59,)
+        self.inputs_shape = (74,)
 
         # learning parameters
         self.learn_start = 100
@@ -135,6 +140,7 @@ class LF2_Agent(Agent):
                    self.episode, self.episode_reward_hist[-1], self.step, self.explore_rate))
             if self.episode % self.save_episode_freq == 0:
                 self.model.save('./LF2_agent/brian/models/{}/lf2_agent'.format(self.episode))
+            self.cal_win_rate(observation)
             self.episode += 1
             self.episode_reward_hist.append(0)
-            self.cal_win_rate(observation)
+            
