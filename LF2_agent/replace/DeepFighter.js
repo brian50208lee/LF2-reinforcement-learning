@@ -77,11 +77,11 @@ define(function() {
 		function get_reward() {
 			reward = 0.0;
 			if (target.health.hp - pre_t_hp < 0) {
-				reward = 1.0;
+				reward = 2.0;
 			} else if (self.health.hp - pre_m_hp < 0) {
 				reward = -1.0;
 			} else if (self.ps.x == 0 || self.ps.x == match.background.width) {
-				reward = -0.5;
+				reward = -0.1;
 			}
 			pre_t_hp = target.health.hp;
 			pre_m_hp = self.health.hp;
