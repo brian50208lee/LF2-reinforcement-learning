@@ -19,7 +19,7 @@ class Agent(object):
 class LF2_Agent(Agent):
     def cal_win_rate(self, obs):
         if not hasattr(self, 'win_rate'):
-            self.win_rate = {'All': 0.0}
+            self.win_rate = {'All': []}
         t_hp, m_hp, t_id = float(obs[6]), float(obs[7]), obs[16]
         if self.win_rate.get(t_id) is None:
             self.win_rate[t_id] = []
