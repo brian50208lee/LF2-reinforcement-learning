@@ -65,7 +65,7 @@ define(function() {
 			var other = [target.id, action, match.background.width, match.background.zboundary[0], match.background.zboundary[1]]
 			// observation vector
 			observation = []
-			observation = observation.concat(x, y, z, hp, mp, fc, st, fm, other)
+			observation = observation.concat(x, z, y, hp, mp, fc, st, fm, other)
 			observation = observation.join() // join by ','
 			return observation
 		}
