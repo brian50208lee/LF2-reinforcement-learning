@@ -1,0 +1,12 @@
+Train Ep=5420 (step=3093581)
+Enemy	WinRate(20 ep.)
+Bandit	0.95
+John	0.65
+Deep	0.8
+Firen	0.7
+Dennis	0.75
+Davis	0.3
+Freeze	0.95
+Woody	0.25e
+Louis	1.0
+Tatal	0.71
