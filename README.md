@@ -30,7 +30,7 @@ bash test_pk.sh [pretrain_model_path]
 ```
 
 ## Agent Actions
-do_nothing, left, right, up, down, def, jump, att
+do_nothing, left, right, up, down, def, jump, att,
 hold_left, hold_right, hold_up, hold_down
 
 ## Keyboard Control
