@@ -1,0 +1,2 @@
+model_checkpoint_path: "lf2_agent"
+all_model_checkpoint_paths: "lf2_agent"
