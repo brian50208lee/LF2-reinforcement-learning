@@ -1,18 +1,37 @@
 # LF2-reinforcement-learning
-ADLxMLDS final project
+2017 ADLxMLDS final project - AliceChienChien
 
-## Team
-AliceChienChien
+## Environment
+```
+tensorflow 1.3.0
+numpy 1.13.3
+Flask 0.12.2 (http request)
+Flask-Cors 3.0.3 (http request)
 
-## Actions
-'do_nothing', 'left', 'right', 'up', 'down', 'def', 'jump', 'att'
+pip install requirment.txt
+```
 
 ## Train
 ```
-1. install jquery/3.2.1
-2. install python3
-3. run script 0, 1, 2
+bash train.sh
 ```
 
-## Demo
-TODO
+## Test Demo
+```
+bash test_demo.sh
+or
+bash test_demo.sh [model_path]
+```
+
+## Test PK
+```
+bash test_pk.sh
+or
+bash test_pk.sh [model_path]
+```
+
+## Agent Actions
+do_nothing, left, right, up, down, def, jump, att
+
+## Human Control
+up, down, left, Right, z, a, q

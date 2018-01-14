@@ -92,19 +92,28 @@ class LF2_Agent(Agent):
 
         # load model
         from brian.DQN import DeepQNetwork
-        self.model = DeepQNetwork(
-                        inputs_shape=self.inputs_shape,
-                        n_actions=self.n_actions,
-                        gamma=0.99,
-                        batch_size=32,
-                        memory_size=10000,
-                        summary_path='./LF2_agent/brian/logs/'
-                    )
+        if args.train:
+            self.model = DeepQNetwork(
+                            inputs_shape=self.inputs_shape,
+                            n_actions=self.n_actions,
+                            gamma=0.99,
+                            batch_size=32,
+                            memory_size=10000,
+                            summary_path='./LF2_agent/brian/logs/'
+                        )
+        else:
+            self.explore_rate = 0.0
+            self.model = DeepQNetwork(
+                inputs_shape=self.inputs_shape,
+                n_actions=self.n_actions,
+                gamma=0.99,
+                batch_size=32,
+                memory_size=0,
+            )
         
         if args.load:
             self.model.load(args.load)
-        if not args.train:
-            self.explore_rate = 0.0
+
 
         # variable
         self.step = 0
