@@ -9,7 +9,7 @@ https://github.com/Project-F/LF2_19.git
 Will be clone when run train/test.sh
 
 ## Environment
-### Python
+Python
 ```
 tensorflow 1.3.0
 numpy 1.13.3
@@ -19,13 +19,13 @@ Flask-Cors 3.0.3 (http request)
 pip install -r requirment.txt
 ```
 
-### Javascript
+Javascript
 ```jQuery```
 
-### OS
+OS
 ```MacOS, Linux```
 
-### Browser
+Browser
 ```Firefox (recommend), Chrome```
 
 ## Train
