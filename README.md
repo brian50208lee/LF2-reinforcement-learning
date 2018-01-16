@@ -40,6 +40,7 @@ or
 bash test_demo.sh [pretrain_model_path]
 ```
 1P: Bandit (DeepFighter)
+
 2P: RandomChar (dumbass AI)
 
 ## Test PK
@@ -49,7 +50,9 @@ or
 bash test_pk.sh [pretrain_model_path]
 ```
 Change computer setting in "Character Selection" page:
+
 Player:  DeepFighter
+
 Fighter: Bandit
 
 ## Agent Actions
