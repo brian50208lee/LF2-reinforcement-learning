@@ -20,12 +20,15 @@ pip install -r requirment.txt
 ```
 
 Javascript
+
 ```jQuery```
 
 OS
+
 ```MacOS, Linux```
 
 Browser
+
 ```Firefox (recommend), Chrome```
 
 ## Train
