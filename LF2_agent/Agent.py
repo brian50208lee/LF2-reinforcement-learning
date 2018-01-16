@@ -75,7 +75,6 @@ class LF2_Agent(Agent):
         return observation
         
     def __init__(self, args):
-        self.tmp = 0
         # model parameters
         self.n_actions = 12
         self.inputs_shape = (61,)
@@ -90,7 +89,7 @@ class LF2_Agent(Agent):
         self.explore_step = 200000
         self.explore_rate_delta = -(self.explore_rate - self.explore_rate_min) / self.explore_step
 
-        # load model
+        # initial model
         from brian.DQN import DeepQNetwork
         if args.train:
             self.model = DeepQNetwork(
@@ -106,21 +105,20 @@ class LF2_Agent(Agent):
             self.model = DeepQNetwork(
                 inputs_shape=self.inputs_shape,
                 n_actions=self.n_actions,
-                gamma=0.99,
-                batch_size=32,
                 memory_size=0,
             )
         
         if args.load:
             self.model.load(args.load)
 
+        print('initial agent done')
 
         # variable
         self.step = 0
         self.episode = 0
         self.episode_reward_hist = [0]
 
-        print('initial agent done')
+
 
     def choose_action(self, observation):
         obs = self.prepro(observation)
@@ -146,7 +144,7 @@ class LF2_Agent(Agent):
         self.episode_reward_hist[-1] += reward
         if done:
             self.model.summary(step=self.step, reward_hist=self.episode_reward_hist)
-            print('episode: {}  reward: {}  step: {}  explore_rate: {:<2f}'.format(
+            print('episode: {}  reward: {:<.2f}  step: {}  explore_rate: {:<.2f}'.format(
                    self.episode, self.episode_reward_hist[-1], self.step, self.explore_rate))
             if self.episode % self.save_episode_freq == 0:
                 self.model.save('./LF2_agent/brian/models/{}/lf2_agent'.format(self.episode))
