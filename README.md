@@ -1,7 +1,15 @@
 # LF2-reinforcement-learning
 2017 ADLxMLDS final project - AliceChienChien
 
+## Depedency
+```
+https://github.com/Project-F/F.LF.git
+https://github.com/Project-F/LF2_19.git
+```
+Will be clone when run train/test.sh
+
 ## Environment
+### Python
 ```
 tensorflow 1.3.0
 numpy 1.13.3
@@ -9,6 +17,15 @@ Flask 0.12.2 (http request)
 Flask-Cors 3.0.3 (http request)
 pip install -r requirment.txt
 ```
+
+### Javascript
+```jQuery```
+
+### OS
+```MacOS, Linux```
+
+### Browser
+```Firefox (recommend), Chrome```
 
 ## Train
 ```
