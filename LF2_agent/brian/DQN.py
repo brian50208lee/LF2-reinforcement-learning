@@ -123,6 +123,8 @@ class BasicDeepQNetwork(object):
 
     def summary(self, step, reward_hist):
         if self.summary_path:
+            run_options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
+            run_metadata = tf.RunMetadata()
             sample_index = np.random.choice(min(self.memory_counter, self.memory_size), size=self.batch_size)
             result = self.sess.run(self.summary_op,
                                    feed_dict={
@@ -132,7 +134,10 @@ class BasicDeepQNetwork(object):
                                         self.r: self.memory_r[sample_index],
                                         self.s_: self.memory_s_[sample_index],
                                         self.d: self.memory_d[sample_index]
-                                   })
+                                   },
+                                   options=run_options,
+                                   run_metadata=run_metadata)
+            self.summary_writer.add_run_metadata(run_metadata, 'step{}'.format(step))
             self.summary_writer.add_summary(result, step)
 
     def replace_target_net(self):
