@@ -1,6 +1,8 @@
 # LF2-reinforcement-learning
 2017 ADLxMLDS final project - AliceChienChien
 
+![image](https://github.com/brian50208lee/LF2-reinforcement-learning/blob/master/LF2_agent/brian/release/5420/demo_5420.gif)
+
 ## Depedency
 ```
 https://github.com/Project-F/F.LF.git
